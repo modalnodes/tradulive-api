@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User, Group
 from django.db.models import Sum
+
+from timezone_field import TimeZoneField
 # Create your models here.
 
 class Language(models.Model):
@@ -25,7 +27,13 @@ class CertificationLevel(models.Model):
         
     class Meta:
         ordering=["value"]
-
+        
+class PersonTitle(models.Model):
+    name = models.CharField(max_length=200)
+    
+    def __str__(self):
+        return self.name
+        
 class CertificationIssuer(models.Model):
     name = models.CharField(max_length=200)
     city = models.CharField(max_length=200)
@@ -79,8 +87,8 @@ class TranslatorProfile(models.Model):
     home_address = models.CharField(max_length=200, null=True, blank=True)
     home_city = models.CharField(max_length=200, null=True, blank=True)
     home_country = models.CharField(max_length=200, null=True, blank=True)
-    title = models.CharField(max_length=200, null=True, blank=True)
-    fuse = models.CharField(max_length=200, null=True, blank=True)
+    title = models.ForeignKey(PersonTitle)
+    timezone = models.TimeZoneField()
 
     vat_num = models.CharField(max_length=200, null=True, blank=True)
     soc_num = models.CharField(max_length=200, null=True, blank=True)
@@ -155,6 +163,12 @@ class CustomerProfile(models.Model):
     skype = models.CharField(max_length=200, null=True, blank=True)
     secondary_mail = models.CharField(max_length=200, null=True, blank=True)
     
+    home_address = models.CharField(max_length=200, null=True, blank=True)
+    home_city = models.CharField(max_length=200, null=True, blank=True)
+    home_country = models.CharField(max_length=200, null=True, blank=True)
+    title = models.ForeignKey(PersonTitle)
+    timezone = models.TimeZoneField()
+
     def minutes(self):
         return self.transactions.all().aggregate(Sum("value"))["value__sum"]
         
