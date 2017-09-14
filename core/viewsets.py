@@ -1,8 +1,10 @@
 from rest_framework import viewsets
 
-from .models import * 
+from .serializers import *
 
 class LanguageViewSet(viewsets.ModelViewSet):
+    queryset = Language.objects.all()
+    serializer_class=LanguageSerializer
     queryset = Language.objects.all()
     serializer_class=LanguageSerializer
     

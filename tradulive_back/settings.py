@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'timezone_field',
+    'rest_framework',
     'core',
 ]
 
