@@ -87,8 +87,8 @@ class TranslatorProfile(models.Model):
     home_address = models.CharField(max_length=200, null=True, blank=True)
     home_city = models.CharField(max_length=200, null=True, blank=True)
     home_country = models.CharField(max_length=200, null=True, blank=True)
-    title = models.ForeignKey(PersonTitle)
-    timezone = TimeZoneField()
+    title = models.ForeignKey(PersonTitle, null=True, blank=True)
+    timezone = TimeZoneField(null=True, blank=True)
 
     vat_num = models.CharField(max_length=200, null=True, blank=True)
     soc_num = models.CharField(max_length=200, null=True, blank=True)
@@ -166,8 +166,8 @@ class CustomerProfile(models.Model):
     home_address = models.CharField(max_length=200, null=True, blank=True)
     home_city = models.CharField(max_length=200, null=True, blank=True)
     home_country = models.CharField(max_length=200, null=True, blank=True)
-    title = models.ForeignKey(PersonTitle)
-    timezone = TimeZoneField()
+    title = models.ForeignKey(PersonTitle, null=True, blank=True)
+    timezone = TimeZoneField(null=True, blank=True)
 
     def minutes(self):
         return self.transactions.all().aggregate(Sum("value"))["value__sum"]
@@ -251,4 +251,7 @@ class TranslatorInvoice(models.Model):
     invoice = models.URLField()
     date = models.DateField()
     amount = models.FloatField()
+    
+    def __str__(self):
+        return "{} - Fattura del {} - EUR:{}".format(self.translator, self.date, self.amount)
     
