@@ -19,10 +19,10 @@ from django.contrib import admin
 
 from rest_framework.schemas import get_schema_view
 
-schema_view = get_schema_view(title='Pastebin API')
+#schema_view = get_schema_view(title='Pastebin API')
 
-from openapi_codec import OpenAPICodec
-codec = OpenAPICodec()
+#from openapi_codec import OpenAPICodec
+#codec = OpenAPICodec()
 #schema = codec.encode(schema_view)
 
 
@@ -32,7 +32,7 @@ from core.views import search
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include(coreurls, namespace="api")),
-    url(r'^schema/$', schema_view),
+ #   url(r'^schema/$', schema_view),
     url(r'^search/$', search),
 
 ]
