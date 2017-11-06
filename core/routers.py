@@ -22,5 +22,7 @@ router.register(r'appointments',AppointmentViewSet)
 router.register(r'appointmentclosures',AppointmentClosureViewSet)
 router.register(r'appointmentevaluations',AppointmentEvaluationViewSet)
 router.register(r'translatorinvoices',TranslatorInvoiceViewSet)
+router.register(r'translatoravailabilities',TranslatorAvailabilityViewSet)
+router.register(r'translatoravailabilityexceptions',TranslatorAvailabilityExceptionViewSet)
 
 urls = router.urls

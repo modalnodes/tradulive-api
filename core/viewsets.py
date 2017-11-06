@@ -5,8 +5,14 @@ from .serializers import *
 class LanguageViewSet(viewsets.ModelViewSet):
     queryset = Language.objects.all()
     serializer_class=LanguageSerializer
-    queryset = Language.objects.all()
-    serializer_class=LanguageSerializer
+    
+    
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return LanguageShortSerializer
+        if self.action == 'retrieve':
+            return LanguageSerializer
+        return self.serializer_class # I dont' know what you want for create/destroy/update.
     
 class LanguageLevelViewSet(viewsets.ModelViewSet):
     queryset = LanguageLevel.objects.all()
@@ -33,7 +39,17 @@ class CertificationViewSet(viewsets.ModelViewSet):
     serializer_class=CertificationSerializer
     
 class TranslatorProfileViewSet(viewsets.ModelViewSet):
+    
     queryset = TranslatorProfile.objects.all()
+    
+    def get_queryset(self):
+        queryset = TranslatorProfile.objects.all()
+        from_l = self.request.query_params.get('from_l', None)
+        to_l = self.request.query_params.get('to_l', None)
+        if from_l is not None and to_l is not None:
+            queryset = queryset.filter(languages__language_from_id=from_l, languages__language_to_id=to_l)
+        return queryset
+    
     serializer_class=TranslatorProfileSerializer
     
 class TranslatorLanguageViewSet(viewsets.ModelViewSet):
@@ -79,4 +95,12 @@ class AppointmentEvaluationViewSet(viewsets.ModelViewSet):
 class TranslatorInvoiceViewSet(viewsets.ModelViewSet):
     queryset = TranslatorInvoice.objects.all()
     serializer_class=TranslatorInvoiceSerializer
+    
+class TranslatorAvailabilityViewSet(viewsets.ModelViewSet):
+    queryset = TranslatorAvailability.objects.all()
+    serializer_class=TranslatorAvailabilitySerializer
+    
+class TranslatorAvailabilityExceptionViewSet(viewsets.ModelViewSet):
+    queryset = TranslatorAvailabilityException.objects.all()
+    serializer_class=TranslatorAvailabilityExceptionSerializer
     

@@ -16,8 +16,23 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from core.routers import urls
+
+from rest_framework.schemas import get_schema_view
+
+schema_view = get_schema_view(title='Pastebin API')
+
+from openapi_codec import OpenAPICodec
+codec = OpenAPICodec()
+#schema = codec.encode(schema_view)
+
+
+from core.routers import urls as coreurls
+from core.views import search
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^', include(urls, namespace="api"))
+    url(r'^', include(coreurls, namespace="api")),
+    url(r'^schema/$', schema_view),
+    url(r'^search/$', search),
+
 ]

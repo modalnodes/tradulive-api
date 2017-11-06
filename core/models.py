@@ -9,6 +9,7 @@ from timezone_field import TimeZoneField
 
 class Language(models.Model):
     name = models.CharField(max_length=200)
+    code = models.CharField(max_length=4)
     def __str__(self):
         return self.name
         
@@ -60,7 +61,6 @@ class Certification(models.Model):
 
 class TranslatorProfile(models.Model):
     user = models.ForeignKey(User)
-    
     tel_home = models.CharField(max_length=200, null=True, blank=True)
     tel_office = models.CharField(max_length=200, null=True, blank=True)
     tel_private_cell = models.CharField(max_length=200, null=True, blank=True)
@@ -68,7 +68,6 @@ class TranslatorProfile(models.Model):
     fax = models.CharField(max_length=200, null=True, blank=True)
     skype = models.CharField(max_length=200, null=True, blank=True)
     secondary_mail = models.CharField(max_length=200, null=True, blank=True)
-    
     tel_model = models.CharField(max_length=200, null=True, blank=True)
     computer_model = models.CharField(max_length=200, null=True, blank=True)
     tablet_model = models.CharField(max_length=200, null=True, blank=True)
@@ -76,33 +75,28 @@ class TranslatorProfile(models.Model):
     cable_internet_provider = models.CharField(max_length=200, null=True, blank=True)
     mobile_internet = models.CharField(max_length=200, null=True, blank=True)
     mobile_internet_provider = models.CharField(max_length=200, null=True, blank=True)
-
     birth_day = models.DateField(null=True, blank=True)
     birth_city = models.CharField(max_length=200, null=True, blank=True)
     birth_country = models.CharField(max_length=200, null=True, blank=True)
     native_lang_1 = models.ForeignKey(Language, related_name="natives")
     native_lang_2 = models.ForeignKey(Language, null=True, blank=True, related_name="secondary_natives")
     Nationality = models.CharField(max_length=200, null=True, blank=True)
-
     home_address = models.CharField(max_length=200, null=True, blank=True)
     home_city = models.CharField(max_length=200, null=True, blank=True)
     home_country = models.CharField(max_length=200, null=True, blank=True)
     title = models.ForeignKey(PersonTitle, null=True, blank=True)
     timezone = TimeZoneField(null=True, blank=True)
-
     vat_num = models.CharField(max_length=200, null=True, blank=True)
     soc_num = models.CharField(max_length=200, null=True, blank=True)
     bank = models.CharField(max_length=200, null=True, blank=True)
     iban = models.CharField(max_length=200, null=True, blank=True)
     swift = models.CharField(max_length=200, null=True, blank=True)
     paypal = models.CharField(max_length=200, null=True, blank=True)
-
     picture = models.URLField(null=True, blank=True)
     video_pres = models.URLField(null=True, blank=True)
     id_card = models.URLField(null=True, blank=True)
     passport = models.URLField(null=True, blank=True)
     vat_pic = models.URLField(null=True, blank=True)
-
     notes = models.TextField(null=True, blank=True)
 
 
@@ -125,7 +119,8 @@ class TranslatorMicrovoc(models.Model):
     translator = models.ForeignKey(TranslatorProfile, related_name="microvocs")
     language_from = models.ForeignKey(Language, related_name="microvoc_to")
     language_to = models.ForeignKey(Language, related_name="microvoc_from")
-    microvoc = models.ForeignKey(MicroVocabulary, related_name="microvoc")
+    lang = models.ForeignKey(TranslatorLanguage, related_name="microvoc", null=True)
+    microvoc = models.ForeignKey(MicroVocabulary, related_name="languages")
     amount = models.IntegerField()
     
     def __str__(self):
@@ -135,7 +130,11 @@ class TranslatorMode(models.Model):
     translator = models.ForeignKey(TranslatorProfile, related_name="modes")
     from_language = models.ForeignKey(Language, related_name="froms")
     to_language = models.ForeignKey(Language, related_name="toes")
+    lang = models.ForeignKey(TranslatorLanguage, related_name="mode", null=True)
     passive_translator = models.BooleanField(default=True)
+    
+    def __str__(self):
+        return "{} - {}:{}".format(self.translator, self.lang, "passive" if self.passive_translator else "active")
     
 
 class CustomerProfile(models.Model):
@@ -225,7 +224,7 @@ class Appointment(models.Model):
     url = models.URLField(null=True, blank=True) # generato quando la sesisone inizia
     
     def __str__(self):
-        return "{0}:{1} - {2}@{3}".format(self.translator, self.customer_language, self.level, self.customer, self.start_ts)
+        return "{}:{}:{} - {}@{}".format(self.translator, self.customer_language, self.level, self.customer, self.start_ts)
     
 class AppointmentClosure(models.Model):
     appointment = models.OneToOneField(Appointment, related_name="closed")
@@ -254,4 +253,28 @@ class TranslatorInvoice(models.Model):
     
     def __str__(self):
         return "{} - Fattura del {} - EUR:{}".format(self.translator, self.date, self.amount)
+    
+class TranslatorAvailability(models.Model):
+    translator = models.ForeignKey(TranslatorProfile, related_name="availabilities")
+    dow = models.IntegerField()
+    from_time = models.TimeField()
+    to_time = models.TimeField()
+    created = models.DateTimeField(auto_now=True)
+    removed = models.DateTimeField(null=True, blank=True)
+    
+    def __str__(self):
+        return "{} - disponibile il {} dalle {} alle {}".format(self.translator, self.dow, self.from_time, self.to_time)
+    class Meta:
+        ordering = ["dow"]
+    
+class TranslatorAvailabilityException(models.Model):
+    translator = models.ForeignKey(TranslatorProfile, related_name="exceptions")
+    created = models.DateTimeField(auto_now=True)
+    removed = models.DateTimeField(null=True, blank=True)
+    date_from = models.DateField()
+    date_to = models.DateField()
+    
+    def __str__(self):
+        return "{} - non disponibile dal {} al {} ".format(self.translator, self.date_from, self.date_to)
+    
     
