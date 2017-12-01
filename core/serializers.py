@@ -70,6 +70,43 @@ class TranslatorAvailabilitySerializer(serializers.ModelSerializer):
         fields = "__all__" 
         ordering = ["dow"]
         
+class TelModelSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = TelModel
+		fields = "__all__"
+		
+class ComputerModelSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = ComputerModel
+		fields = "__all__"
+		
+class TabletModelSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = TabletModel
+		fields = "__all__"
+		
+class CableInternetSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = CableInternet
+		fields = "__all__"
+		
+class CableInternetProviderSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = CableInternetProvider
+		fields = "__all__"
+		
+class MobileInternetSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = MobileInternet
+		fields = "__all__"
+		
+class MobileInternetProviderSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = MobileInternetProvider
+		fields = "__all__"
+		
+
+        
 class TranslatorAvailabilityExceptionSerializer(serializers.ModelSerializer):
     start = serializers.SerializerMethodField()
     end = serializers.SerializerMethodField()

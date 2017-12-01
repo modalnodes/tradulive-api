@@ -104,3 +104,31 @@ class TranslatorAvailabilityExceptionViewSet(viewsets.ModelViewSet):
     queryset = TranslatorAvailabilityException.objects.all()
     serializer_class=TranslatorAvailabilityExceptionSerializer
     
+class TelModelViewSet(viewsets.ModelViewSet):
+	queryset = TelModel.objects.all()
+	serializer_class = TelModelSerializer
+	
+class ComputerModelViewSet(viewsets.ModelViewSet):
+	queryset = ComputerModel.objects.all()
+	serializer_class = ComputerModelSerializer
+	
+class TabletModelViewSet(viewsets.ModelViewSet):
+	queryset = TabletModel.objects.all()
+	serializer_class = TabletModelSerializer
+	
+class CableInternetViewset(viewsets.ModelViewSet):
+	queryset = CableInternet.objects.all()
+	serializer_class = CableInternetSerializer
+	
+class CableInternetProviderViewset(viewsets.ModelViewSet):
+	queryset = CableInternetProvider.objects.all()
+	serializer_class = CableInternetProviderSerializer
+	
+class MobileInternetViewset(viewsets.ModelViewSet):
+	queryset = MobileInternet.objects.all()
+	serializer_class = MobileInternetSerializer
+	
+class MobileInternetProviderViewset(viewsets.ModelViewSet):
+	queryset = MobileInternetProvider.objects.all()
+	serializer_class = MobileInternetProviderSerializer
+	

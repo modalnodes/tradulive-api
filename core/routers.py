@@ -25,4 +25,13 @@ router.register(r'translatorinvoices',TranslatorInvoiceViewSet)
 router.register(r'translatoravailabilities',TranslatorAvailabilityViewSet)
 router.register(r'translatoravailabilityexceptions',TranslatorAvailabilityExceptionViewSet)
 
+router.register(r"telmodel", TelModelViewset)
+router.register(r"computermodel", ComputerModelViewset)
+router.register(r"tabletmodel", TabletModelViewset)
+router.register(r"cableinternet", CableInternetViewset)
+router.register(r"cableinternetprovider", CableInternetProviderViewset)
+router.register(r"mobileinternet", MobileInternetViewset)
+router.register(r"mobileinternetprovider", MobileInternetProviderViewset)
+
+
 urls = router.urls

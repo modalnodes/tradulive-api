@@ -57,7 +57,56 @@ class Certification(models.Model):
     language_to = models.ForeignKey(Language, related_name="certified_to")
     def __str__(self):
         return self.name
-    
+
+class TelModel(models.Model):
+    name = models.CharField(max_length=200)
+    def __str__(self):
+        return self.name
+    class Meta:
+        verbose_name="AA Telephone Model"
+
+class ComputerModel(models.Model):
+    name = models.CharField(max_length=200)
+    def __str__(self):
+        return self.name
+    class Meta:
+        verbose_name="AA Computer Model"
+
+class TabletModel(models.Model):
+    name = models.CharField(max_length=200)
+    def __str__(self):
+        return self.name
+    class Meta:
+        verbose_name="AA Tablet Model"
+
+class CableInternet(models.Model):
+    name = models.CharField(max_length=200)
+    def __str__(self):
+        return self.name
+    class Meta:
+        verbose_name="AA Cable Internet"
+
+class CableInternetProvider(models.Model):
+    name = models.CharField(max_length=200)
+    def __str__(self):
+        return self.name
+    class Meta:
+        verbose_name="AA Cable Internet Provider"
+
+class MobileInternet(models.Model):
+    name = models.CharField(max_length=200)
+    def __str__(self):
+        return self.name
+    class Meta:
+        verbose_name="AA Mobile Internet"
+
+class MobileInternetProvider(models.Model):
+    name = models.CharField(max_length=200)
+    def __str__(self):
+        return self.name
+    class Meta:
+        verbose_name="AA Mobile Internet Provider"
+
 
 class TranslatorProfile(models.Model):
     user = models.ForeignKey(User)
