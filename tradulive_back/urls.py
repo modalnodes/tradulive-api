@@ -27,12 +27,14 @@ from rest_framework.schemas import get_schema_view
 
 
 from core.routers import urls as coreurls
-from core.views import search
+from core.views import search, update_field
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include(coreurls, namespace="api")),
  #   url(r'^schema/$', schema_view),
     url(r'^search/$', search),
+    
+    url(r'^update$', update_field),
 
 ]
