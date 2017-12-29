@@ -1,0 +1,25 @@
+- AA TELEPHONE MODELS
+    Samsung S8
+	Samsung S7
+	Samsung S6
+	iPhone 6
+	iPhone 5
+- AA TABLET MODELS
+    samsung x
+    ipad
+AA MOBILE INTERNET
+	Telecom
+	Tim
+	Wind
+	Tre
+    
+AA CABLE INTERNET
+	ADLS
+	Fibra
+	Modem
+    
+AA CABLE INTERNET PROVIDER
+	Omnitel
+	Tre
+	Fastweb
+	Telecom
