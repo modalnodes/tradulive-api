@@ -14,6 +14,14 @@ def update_field(request):
     f = request.POST.get("f")
     v = request.POST.get("v")
     
+    ts = {
+        'translator':TranslatorProfile
+    }
+    
+    itm = ts[t].objects.get(pk=i)
+    setattr(itm, f, v)
+    itm.save()
+    
     return HttpResponse(json.dumps({"response":"OK"}))
     
     
