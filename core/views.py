@@ -9,10 +9,10 @@ import dateutil.parser
 import json
 
 def update_field(request):
-    t = request.POST.get("t")
-    i = request.POST.get("i")
-    f = request.POST.get("f")
-    v = request.POST.get("v")
+    t = request.GET.get("t")
+    i = request.GET.get("i")
+    f = request.GET.get("f")
+    v = request.GET.get("v")
     
     ts = {
         'translator':TranslatorProfile

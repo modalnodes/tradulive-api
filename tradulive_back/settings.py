@@ -13,50 +13,6 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 import os
 
 
-dbs = {
-    "psql":"",
-    "mysql":"",
-    "oracle":"",
-    "sqlite":"django.db.backends.sqlite3",
-    
-    "postgis":"",
-    "spatialite":"",
-    
-    "psql_multitenant":"tenant_schemas.postgresql_backend",
-}
-
-def db_from_env(default_conf):
-    
-    ret = default_conf
-    
-    DB_ENGINE = os.getenv("DB_ENGINE")
-    DB_ENGINE = dbs.get(DB_ENGINE, "")
-    DB_NAME   = os.getenv("DB_NAME")
-    DB_PASS   = os.getenv("DB_PASS")
-    DB_USER   = os.getenv("DB_USER")
-    DB_HOST   = os.getenv("DB_HOST")
-    DB_PORT   = os.getenv("DB_PORT")
-    DB_EXTRAS = os.getenv("DB_EXTRAS")
-
-    print(DB_ENGINE, DB_NAME, DB_USER, DB_PASS, DB_HOST, DB_PORT)
-
-    if DB_ENGINE != "":
-        ret = {
-            "ENGINE":DB_ENGINE
-        }
-    if DB_NAME:
-        ret["NAME"] = DB_NAME
-    if DB_USER:
-        ret["USER"] = DB_USER
-    if DB_PASS:
-        ret["PASSWORD"] = DB_PASS
-    if DB_HOST:
-        ret["HOST"] = DB_HOST
-    if DB_PORT:
-        ret["PORT"] = DB_PORT
-        
-    return ret
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -70,7 +26,7 @@ SECRET_KEY = '64xd5$svse50d^^f%uum_os1dzupn&gh+hhv5fk%6b$z*-p1mt'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*", "app.tradulive.eu", "app.staging.tradulive.eu"]
+ALLOWED_HOSTS = ["*"]
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
@@ -92,9 +48,9 @@ INSTALLED_APPS = [
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
